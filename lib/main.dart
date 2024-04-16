@@ -1,7 +1,10 @@
 //Jonathan Principato 000851929
 //Nick Mulas 000866712
-//Final Project Mobile Enabled Devices CENG10021
+//Final Project Mobile Embedded Devices CENG10021
 //April 16 2024
+
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'package:flutter/material.dart';
 import 'accounts/loginScreen.dart';
@@ -11,7 +14,10 @@ import 'data/dataDetails.dart';
 import 'data/dataList.dart';
 import 'data/dataVisual.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
       MaterialApp(initialRoute: '/login',
         routes: {
