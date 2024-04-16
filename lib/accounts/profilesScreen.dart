@@ -1,4 +1,4 @@
-//profile screenn
+//profile screennn
 import 'package:flutter/material.dart';
 
 class Profiles extends StatefulWidget {
