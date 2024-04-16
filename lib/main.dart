@@ -4,7 +4,6 @@
 //April 16 2024
 
 import 'package:flutter/material.dart';
-
 import 'accounts/loginScreen.dart';
 import 'accounts/profilesScreen.dart';
 import 'accounts/signupScreen.dart';
@@ -26,4 +25,3 @@ void main() {
         },)
   );
 }
-

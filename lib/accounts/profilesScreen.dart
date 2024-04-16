@@ -9,6 +9,9 @@ class Profiles extends StatefulWidget {
 class _ProfilesState extends State<Profiles> {
   @override
   Widget build(BuildContext context)  {
-    return Scaffold();
+    return Scaffold(appBar: AppBar(
+      backgroundColor: Colors.red,
+      title: Text("Profile Screen"),
+    ),);
   }
 }
