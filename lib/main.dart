@@ -1,6 +1,6 @@
 //Jonathan Principato 000851929
 //Nick Mulas 000866712
-//Final Project mobile enabled devices
+//Final Project Mobile Enabled Devices CENG10021
 //April 16 2024
 
 import 'package:flutter/material.dart';
