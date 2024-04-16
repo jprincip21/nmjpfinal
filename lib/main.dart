@@ -1,3 +1,7 @@
+//Jonathan Principato 000851929
+//Nick Mulas 000866712
+//Final Project
+
 import 'package:flutter/material.dart';
 
 import 'accounts/loginScreen.dart';
