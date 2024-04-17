@@ -15,11 +15,12 @@ import 'data/dataList.dart';
 import 'data/dataVisual.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-      MaterialApp(initialRoute: '/login',
+      MaterialApp(initialRoute: '/signup',
         routes: {
           '/login':(context) => Login(),
           '/signup': (context) => SignUp(),
