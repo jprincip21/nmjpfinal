@@ -31,40 +31,61 @@ class _DataDetailsState extends State<DataDetails> {
         ),
       ),
 
-      body: Center(
-        child: FutureBuilder<List<PokemonDetails>>(
+      body: FutureBuilder<PokemonDetails>(
           future: getPokemonDetails(id),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              var details = snapshot.data as List<PokemonDetails>;
-              return ListView.builder(
-                  itemCount: details.length,
-                  itemBuilder: (context, ind) {
-                    var detail = details[ind];
-                    return ListTile(
-                      title: Text(detail.name),
-                      //subtitle: Text(detail.height),
-                      //trailing: Text(detail.count().toString()),
-                    );
-                  });
-            } else if (snapshot.hasError) {
-              return const Text('Error');
-            }
+              var details = snapshot.data!;
+              return Column(
+                children: [
+                  Row(
+                    children: [
+                      Text("Pokédex ID #: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                      Text(details.id.toString(), style: TextStyle(color: Colors.white),),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text("Type(s): ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                      Text(details.types[0], style: TextStyle(color: Colors.white),)
+                      
 
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text("Height: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                      Text("${details.height.toString()}m", style: TextStyle(color: Colors.white),),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text("Weight: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                      Text("${details.weight.toString()}Kgs", style: TextStyle(color: Colors.white),),
+                    ],
+                  ),
+                ],
+              );
+
+            } else if (snapshot.hasError) {
+              return const Text('Error Fetching Pokemon Details', style: TextStyle(color: Colors.white),);
+            }
             return const CircularProgressIndicator();
-          },
-        ),
+            },
       ),
+
     );
   }
 }
 
-Future<List<PokemonDetails>> getPokemonDetails(int id) async {
+Future<PokemonDetails> getPokemonDetails(int id) async {
   var url = 'https://softwium.com/api/pokemons/$id';
   var response = await http.get(Uri.parse(url));
+  print('Response status: ${response.statusCode}');
+  print('Response body: ${response.body}');
   if (response.statusCode == 200) {
-    List jsonResponse = jsonDecode(response.body);
-    return jsonResponse.map<PokemonDetails>((m) => PokemonDetails.fromJson(m)).toList();
+    Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+    return PokemonDetails.fromJson(jsonResponse);
   } else {
     throw Exception('Failed to fetch Data');
   }
@@ -73,9 +94,9 @@ Future<List<PokemonDetails>> getPokemonDetails(int id) async {
 class PokemonDetails {
   final int id;
   final String name;
-  final int height;
-  final int weight;
-  //final String types;
+  final double height;
+  final double weight;
+  final List<String> types;
 
 
   PokemonDetails({
@@ -83,16 +104,26 @@ class PokemonDetails {
     required this.name,
     required this.height,
     required this.weight,
-    //required this.types,
+    required this.types,
   });
 
   factory PokemonDetails.fromJson(Map<String, dynamic> json) {
     return PokemonDetails(
       id: json['id'],
       name: json['name'],
-      height: json['height'],
-      weight: json['weight'],
-      //types: json['types'],
+      height: json['height'] is int ? json['height'].toDouble() : json['height'],
+      weight: json['weight'] is int ? json['weight'].toDouble() : json['weight'],
+      types: List<String>.from(json['types']),
     );
+  }
+}
+
+String getTyping(List<String> types){
+  if(types[1].isNotEmpty) {
+    return types[0];
+      //"${types[0]}, ${types[1]} ";
+  }
+  else {
+    return types[0];
   }
 }
