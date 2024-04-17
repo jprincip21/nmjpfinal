@@ -20,7 +20,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-      MaterialApp(initialRoute: '/signup',
+      MaterialApp(initialRoute: '/login',
         routes: {
           '/login':(context) => Login(),
           '/signup': (context) => SignUp(),

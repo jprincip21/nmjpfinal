@@ -8,25 +8,17 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   TextEditingController _emailFieldController = TextEditingController();
-  TextEditingController _passwordFieldController = TextEditingController();
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  TextEditingController _passFieldController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 
   bool isValidEmail(String input){
-    final emailRegex = RegExp(r'^(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$').hasMatch(input);
+    final emailRegex = RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$').hasMatch(input);
     return input.isNotEmpty && emailRegex;
 
   }
-
-  void _login() {
-    String email = _emailFieldController.text;
-    String password = _passwordFieldController.text;
-    if (!isValidEmail(email)) {
-      print('Invalid email address');
-      return;
-    }
-    print('Email: $email');
-    print('Password: $password');
+  bool isValidPass(String input){
+    return input.isNotEmpty;
   }
 
   @override
@@ -47,27 +39,29 @@ class _LoginState extends State<Login> {
       body: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Form(
-          key: _formkey,
+          autovalidateMode: AutovalidateMode.always,
+          key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
-          style: const TextStyle(color: Colors.white),
-          decoration: const InputDecoration(
-              icon: Icon(Icons.email, color: Colors.white,),
-              hintText: "Enter Email",
-              hintStyle: TextStyle(color: Colors.grey),
-              labelText: "Email",
-              labelStyle: TextStyle(color: Colors.white)
-          ),
-          keyboardType: TextInputType.emailAddress,
-          controller: _emailFieldController,
-          validator: (val) =>
-          isValidEmail(val!) ? null : "Invalid Email",
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
+                    icon: Icon(Icons.email, color: Colors.white,),
+                    hintText: "Enter Email",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    labelText: "Email",
+                    labelStyle: TextStyle(color: Colors.white)
                 ),
+                keyboardType: TextInputType.emailAddress,
+                controller: _emailFieldController,
+                validator: (val) =>
+                isValidEmail(val!) ? null : "Invalid Email",
+              ),
 
               SizedBox(height: 20),
+
             TextFormField(
               obscureText: true,
               style: const TextStyle(color: Colors.white),
@@ -79,11 +73,25 @@ class _LoginState extends State<Login> {
                   labelStyle: TextStyle(color: Colors.white)
               ),
               keyboardType: TextInputType.visiblePassword,
-              controller: _passwordFieldController,
+              controller: _passFieldController,
+              validator: (val) =>
+              isValidPass(val!) ? null : "Invalid Password",
             ),
+
             SizedBox(height: 20),
+
             ElevatedButton(
-              onPressed: _login,
+              onPressed: () async {
+                if(_formKey.currentState!.validate()) {
+                  FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: _emailFieldController.text,
+                      password: _passFieldController.text).then((value) {
+                    Navigator.pushNamed(context, '/profiles');
+                  }).onError((error, stackTrace) {
+                    print("Error ${error.toString()}");
+                  });
+                }
+              },
               child: Text('Login'),
             ),
 

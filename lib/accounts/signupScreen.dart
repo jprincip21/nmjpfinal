@@ -141,9 +141,6 @@ class _SignUpState extends State<SignUp> {
                                 print("Error ${error.toString()}");
                               });
                             }
-                            else{
-                              null;
-                            }
                           },child: const Text("Sign Up", style: TextStyle(color: Colors.white))
                       )
                   )
