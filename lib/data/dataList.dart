@@ -19,7 +19,7 @@ class _DataListState extends State<DataList> {
         elevation: 10,
         shadowColor: Colors.black,
         title: Text(
-          "Pokemon",
+          "Pokémon",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -61,6 +61,8 @@ class _DataListState extends State<DataList> {
 Future<List<Pokemon>> getPokemon() async {
   var url = 'https://softwium.com/api/pokemons';
   var response = await http.get(Uri.parse(url));
+  //print('Response status: ${response.statusCode}');
+  //print('Response body: ${response.body}');
   if (response.statusCode == 200) {
     List jsonResponse = jsonDecode(response.body);
     return jsonResponse.map<Pokemon>((m) => Pokemon.fromJson(m)).toList();
