@@ -31,7 +31,7 @@ class _DataListState extends State<DataList> {
         elevation: 10,
         shadowColor: Colors.black,
         title: Text(
-          "Pokémon",
+          "Pokédex",
           style: TextStyle(color: Colors.white),
         ),
       ),
