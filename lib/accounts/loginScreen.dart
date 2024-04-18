@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -30,6 +31,7 @@ class _LoginState extends State<Login> {
         backgroundColor: Colors.red,
         elevation: 10,
         shadowColor: Colors.black,
+        leading: Text(""),
         title: Text(
           "Login Screen",
           style: TextStyle(color: Colors.white),
@@ -39,7 +41,6 @@ class _LoginState extends State<Login> {
       body: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Form(
-          autovalidateMode: AutovalidateMode.always,
           key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -80,19 +81,25 @@ class _LoginState extends State<Login> {
 
             SizedBox(height: 20),
 
-            ElevatedButton(
-              onPressed: () async {
-                if(_formKey.currentState!.validate()) {
-                  FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: _emailFieldController.text,
-                      password: _passFieldController.text).then((value) {
-                    Navigator.pushNamed(context, '/dataList');
-                  }).onError((error, stackTrace) {
-                    print("Error ${error.toString()}");
-                  });
-                }
-              },
-              child: Text('Login'),
+            Container(
+              padding: const EdgeInsets.only(left: 40, top: 20, right: 40, bottom: 20),
+              child: ElevatedButton(
+
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, ),
+                onPressed: () async {
+                  if(_formKey.currentState!.validate()) {
+                    FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: _emailFieldController.text,
+                        password: _passFieldController.text).then((value) async {
+                          await cloudUser(true);
+                      Navigator.pushNamed(context, '/dataList');
+                    }).onError((error, stackTrace) {
+                      print("Error ${error.toString()}");
+                    });
+                  }
+                },
+                child: Text('Login', style: TextStyle(color: Colors.white)),
+              ),
             ),
 
             SizedBox(height: 10),
@@ -113,5 +120,12 @@ class _LoginState extends State<Login> {
       ),
       )
     );
+  }
+  Future<void> cloudUser(bool status) async {
+    final CollectionReference onlineUser = FirebaseFirestore.instance.collection('onlineStatus');
+    String? email = FirebaseAuth.instance.currentUser?.email;
+    String? uid = FirebaseAuth.instance.currentUser?.uid.toString();
+    onlineUser.doc(uid).set({'email': email,'uid': uid, 'online' : status});
+    return;
   }
 }

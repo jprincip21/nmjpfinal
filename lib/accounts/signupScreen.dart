@@ -52,99 +52,105 @@ class _SignUpState extends State<SignUp> {
             title: Text("Sign Up Screen", style: TextStyle(color: Colors.white),)
         ),
         body:
-        Form(
-            autovalidateMode: AutovalidateMode.always,
-            //User Input
-            key: _formKey,
-            child: ListView(
-                padding: const EdgeInsets.all(8.0),
-                children: [
+        Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: ListView(
+            children: [Form(
+                autovalidateMode: AutovalidateMode.always,
+                //User Input
+                key: _formKey,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
 
-                  // TextFormField(
-                  //   style: const TextStyle(color: Colors.white),
-                  //   decoration: const InputDecoration(
-                  //       icon: Icon(Icons.people, color: Colors.white),
-                  //       hintText: "Enter Username",
-                  //       hintStyle: TextStyle(color: Colors.grey),
-                  //       labelText: "Username",
-                  //       labelStyle: TextStyle(color: Colors.white)
-                  //   ),
-                  //   keyboardType: TextInputType.name,
-                  //   controller: _userFieldController,
-                  //   validator: (val) =>
-                  //   isValidUser(val!) ? null : "Invalid Username",
-                  // ),
+                      // TextFormField(
+                      //   style: const TextStyle(color: Colors.white),
+                      //   decoration: const InputDecoration(
+                      //       icon: Icon(Icons.people, color: Colors.white),
+                      //       hintText: "Enter Username",
+                      //       hintStyle: TextStyle(color: Colors.grey),
+                      //       labelText: "Username",
+                      //       labelStyle: TextStyle(color: Colors.white)
+                      //   ),
+                      //   keyboardType: TextInputType.name,
+                      //   controller: _userFieldController,
+                      //   validator: (val) =>
+                      //   isValidUser(val!) ? null : "Invalid Username",
+                      // ),
 
-                  //Email Input
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                        icon: Icon(Icons.email, color: Colors.white,),
-                        hintText: "Enter Email",
-                        hintStyle: TextStyle(color: Colors.grey),
-                        labelText: "Email",
-                        labelStyle: TextStyle(color: Colors.white)
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _emailFieldController,
-                    validator: (val) =>
-                    isValidEmail(val!) ? null : "Invalid Email",
-                  ),
+                      //Email Input
+                      TextFormField(
+                        style: const TextStyle(color: Colors.white),
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.email, color: Colors.white,),
+                            hintText: "Enter Email",
+                            hintStyle: TextStyle(color: Colors.grey),
+                            labelText: "Email",
+                            labelStyle: TextStyle(color: Colors.white)
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        controller: _emailFieldController,
+                        validator: (val) =>
+                        isValidEmail(val!) ? null : "Invalid Email",
+                      ),
 
 
-                  //Pass Input
-                  TextFormField(
-                    obscureText: true,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                        icon: Icon(Icons.password, color: Colors.white),
-                        hintText: "Enter Password",
-                        hintStyle: TextStyle(color: Colors.grey),
-                        labelText: "Password",
-                        labelStyle: TextStyle(color: Colors.white)
-                    ),
-                    keyboardType: TextInputType.visiblePassword,
-                    controller: _passFieldController,
-                    validator: (val) =>
-                    isValidPass(val!) ? null : "Passwords must be: \n\t- 8 Characters \n\t- 1 Uppercase \n\t- 1 Lowercase \n\t- 1 Number (0-9) \n\t- 1 Special Character (@\$!%*?&)",
-                  ),
+                      //Pass Input
+                      TextFormField(
+                        obscureText: true,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.password, color: Colors.white),
+                            hintText: "Enter Password",
+                            hintStyle: TextStyle(color: Colors.grey),
+                            labelText: "Password",
+                            labelStyle: TextStyle(color: Colors.white)
+                        ),
+                        keyboardType: TextInputType.visiblePassword,
+                        controller: _passFieldController,
+                        validator: (val) =>
+                        isValidPass(val!) ? null : "Passwords must be: \n\t- 8 Characters \n\t- 1 Uppercase \n\t- 1 Lowercase \n\t- 1 Number (0-9) \n\t- 1 Special Character (@\$!%*?&)",
+                      ),
 
-                  TextFormField(
-                    obscureText: true,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                        icon: Icon(Icons.password, color: Colors.white),
-                        hintText: "Confirm Password",
-                        hintStyle: TextStyle(color: Colors.grey),
-                        labelText: "Confirm Password",
-                        labelStyle: TextStyle(color: Colors.white)
-                    ),
-                    keyboardType: TextInputType.visiblePassword,
-                    controller: _passConfFieldController,
-                    validator: (val) =>
-                    isValidPassConf(val!) ? null : "Passwords Must Match",
-                  ),
+                      TextFormField(
+                        obscureText: true,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.password, color: Colors.white),
+                            hintText: "Confirm Password",
+                            hintStyle: TextStyle(color: Colors.grey),
+                            labelText: "Confirm Password",
+                            labelStyle: TextStyle(color: Colors.white)
+                        ),
+                        keyboardType: TextInputType.visiblePassword,
+                        controller: _passConfFieldController,
+                        validator: (val) =>
+                        isValidPassConf(val!) ? null : "Passwords Must Match",
+                      ),
 
-                  Container(
-                      padding: const EdgeInsets.only(left: 40, top: 20, right: 40, bottom: 20),
+                      Container(
+                          padding: const EdgeInsets.only(left: 40, top: 20, right: 40, bottom: 20),
 
-                      //Sign Up Button
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, ),
-                          onPressed: () async {
-                            if(_formKey.currentState!.validate()) {
-                              FirebaseAuth.instance.createUserWithEmailAndPassword(
-                                  email: _emailFieldController.text,
-                                  password: _passFieldController.text).then((value) {
-                                Navigator.pushNamed(context, '/login');
-                              }).onError((error, stackTrace) {
-                                print("Error ${error.toString()}");
-                              });
-                            }
-                          },child: const Text("Sign Up", style: TextStyle(color: Colors.white))
+                          //Sign Up Button
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, ),
+                              onPressed: () async {
+                                if(_formKey.currentState!.validate()) {
+                                  FirebaseAuth.instance.createUserWithEmailAndPassword(
+                                      email: _emailFieldController.text,
+                                      password: _passFieldController.text).then((value) {
+                                    Navigator.pushNamed(context, '/login');
+                                  }).onError((error, stackTrace) {
+                                    print("Error ${error.toString()}");
+                                  });
+                                }
+                              },child: const Text("Sign Up", style: TextStyle(color: Colors.white))
+                          )
                       )
-                  )
-                ])
+                    ])
+            ),
+          ]),
         )
     );
   }

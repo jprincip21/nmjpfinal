@@ -1,6 +1,8 @@
 //Profiles
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Profiles extends StatefulWidget {
   @override
@@ -75,6 +77,17 @@ class _ProfilesState extends State<Profiles> {
             //   },
             //   child: Text("Change Username"),
             // ),
+            Text("Account Details:",
+              style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,),
+
+              Text(
+                  "Email: ${FirebaseAuth.instance.currentUser?.email}"
+                  "\nUser ID: ${FirebaseAuth.instance.currentUser?.uid.toString()}\n ",
+              style: TextStyle(color: Colors.white, fontSize: 16),
+              textAlign: TextAlign.center,),
+
+
 
             ElevatedButton(
               onPressed: () {
@@ -169,11 +182,15 @@ class _ProfilesState extends State<Profiles> {
 
             ElevatedButton(
               onPressed: () async {
-                FirebaseAuth.instance.signOut().then((value) {
-                  Navigator.pushNamed(context, '/login');
-                }).onError((error, stackTrace) {
-                  print("Error ${error.toString()}");
+                await cloudUser(false).then((value) async {
+                  FirebaseAuth.instance.signOut().then((value) {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }).onError((error, stackTrace) {
+                    print("Error ${error.toString()}");
+                  });
                 });
+
               },
               child: Text("Logout"),
             ),
@@ -215,6 +232,14 @@ class _ProfilesState extends State<Profiles> {
   //   } else if (index == 2) {
   //   }
   // }
+
+  Future<void> cloudUser(bool status) async {
+    final CollectionReference onlineUser = FirebaseFirestore.instance.collection('onlineStatus');
+    String? email = FirebaseAuth.instance.currentUser?.email;
+    String? uid = FirebaseAuth.instance.currentUser?.uid.toString();
+    onlineUser.doc(uid).set({'online' : status}, SetOptions(merge: true));
+    return;
+  }
 }
 
 

@@ -48,6 +48,7 @@ class _DataListState extends State<DataList> {
                         child: Text(pokemon.getImage()),
                       ),
                       title: Text(pokemon.name, style: TextStyle(color: Colors.white),),
+                      trailing: IconButton(onPressed: () {}, icon: Icon(Icons.star_outline, color: Colors.yellow,)),
                     );
                   });
             } else if (snapshot.hasError) {
