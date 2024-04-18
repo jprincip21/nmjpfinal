@@ -40,89 +40,92 @@ class _LoginState extends State<Login> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(25.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(height: 10),
-            Image.asset(
-              'images/Polytoad.png',
-              height: 300,
-            ),
-              TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: const InputDecoration(
-                      icon: Icon(Icons.email, color: Colors.white,),
-                      hintText: "Enter Email",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "Email",
-                      labelStyle: TextStyle(color: Colors.white)
+          child: ListView(
+            children: [
+              Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(height: 20),
+                  Image.asset(
+                    'images/Polytoad.png',
+                    height: 300,
                   ),
-                  keyboardType: TextInputType.emailAddress,
-                  controller: _emailFieldController,
-                  validator: (val) =>
-                  isValidEmail(val!) ? null : "Invalid Email",
-                ),
-
-                SizedBox(height: 20),
-
-                TextFormField(
-                  obscureText: true,
-                  style: const TextStyle(color: Colors.white),
-                  decoration: const InputDecoration(
-                      icon: Icon(Icons.password, color: Colors.white,),
-                      hintText: "Enter Password",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "Password",
-                      labelStyle: TextStyle(color: Colors.white)
+                  TextFormField(
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                        icon: Icon(Icons.email, color: Colors.white,),
+                        hintText: "Enter Email",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        labelText: "Email",
+                        labelStyle: TextStyle(color: Colors.white)
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _emailFieldController,
+                    validator: (val) =>
+                    isValidEmail(val!) ? null : "Invalid Email",
                   ),
-                  keyboardType: TextInputType.visiblePassword,
-                  controller: _passFieldController,
-                  validator: (val) =>
-                  isValidPass(val!) ? null : "Invalid Password",
-                ),
 
-                SizedBox(height: 20),
+                  SizedBox(height: 20),
 
-                Container(
-                  padding: const EdgeInsets.only(left: 40, top: 20, right: 40, bottom: 20),
-                  child: ElevatedButton(
-
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, ),
-                    onPressed: () async {
-                      if(_formKey.currentState!.validate()) {
-                        FirebaseAuth.instance.signInWithEmailAndPassword(
-                            email: _emailFieldController.text,
-                            password: _passFieldController.text).then((value) async {
-                          await cloudUser(true);
-                          Navigator.pushNamed(context, '/dataList');
-                        }).onError((error, stackTrace) {
-                          print("Error ${error.toString()}");
-                        });
-                      }
-                    },
-                    child: Text('Login', style: TextStyle(color: Colors.white)),
+                  TextFormField(
+                    obscureText: true,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                        icon: Icon(Icons.password, color: Colors.white,),
+                        hintText: "Enter Password",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        labelText: "Password",
+                        labelStyle: TextStyle(color: Colors.white)
+                    ),
+                    keyboardType: TextInputType.visiblePassword,
+                    controller: _passFieldController,
+                    validator: (val) =>
+                    isValidPass(val!) ? null : "Invalid Password",
                   ),
-                ),
 
-                SizedBox(height: 10),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text("Don't have an account?", style: TextStyle(color: Colors.white),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
-                    },
-                    child: Text('Sign up Here!', style: TextStyle(color: Colors.red),
+                  SizedBox(height: 20),
+
+                  Container(
+                    padding: const EdgeInsets.only(left: 40, top: 20, right: 40, bottom: 20),
+                    child: ElevatedButton(
+
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, ),
+                      onPressed: () async {
+                        if(_formKey.currentState!.validate()) {
+                          FirebaseAuth.instance.signInWithEmailAndPassword(
+                              email: _emailFieldController.text,
+                              password: _passFieldController.text).then((value) async {
+                            await cloudUser(true);
+                            Navigator.pushNamed(context, '/dataList');
+                          }).onError((error, stackTrace) {
+                            print("Error ${error.toString()}");
+                          });
+                        }
+                      },
+                      child: Text('Login', style: TextStyle(color: Colors.white)),
                     ),
                   ),
+
+                  SizedBox(height: 10),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Text("Don't have an account?", style: TextStyle(color: Colors.white),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/signup');
+                      },
+                      child: Text('Sign up Here!', style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  ],
+                  ),
                 ],
-                ),
-              ],
+              ),
             ),
-          ),
+            ]),
         )
     );
   }

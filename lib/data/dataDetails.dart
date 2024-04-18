@@ -12,6 +12,9 @@ class DataDetails extends StatefulWidget {
 }
 
 class _DataDetailsState extends State<DataDetails> {
+
+  int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
 
@@ -74,8 +77,40 @@ class _DataDetailsState extends State<DataDetails> {
             return const CircularProgressIndicator();
             },
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.black,
+        items:
+        const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'Data List',
+          ),
 
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart),
+            label: 'Data Visual',
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Profiles',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey.shade800,
+        onTap: _onItemTapped,
+      ),
     );
+  }
+  void _onItemTapped(int index) {
+    if (index == 0) {
+    }  else if (index == 1) {
+      Navigator.pushNamed(context, '/dataVisual');
+    } else if (index == 2) {
+      Navigator.pushNamed(context, '/profiles');
+    }
   }
 }
 

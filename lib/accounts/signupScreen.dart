@@ -63,7 +63,11 @@ class _SignUpState extends State<SignUp> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-
+                        SizedBox(height: 10),
+                        Image.asset(
+                          'images/jonathan.png',
+                          height: 250,
+                        ),
                         // TextFormField(
                         //   style: const TextStyle(color: Colors.white),
                         //   decoration: const InputDecoration(

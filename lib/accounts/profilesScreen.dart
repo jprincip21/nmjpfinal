@@ -52,8 +52,8 @@ class _ProfilesState extends State<Profiles> {
 
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(height: 50),
 
             // TextFormField(
             //   style: const TextStyle(color: Colors.white),
@@ -81,13 +81,20 @@ class _ProfilesState extends State<Profiles> {
               style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,),
 
+
+
             Text(
               "Email: ${FirebaseAuth.instance.currentUser?.email}"
                   "\nUser ID: ${FirebaseAuth.instance.currentUser?.uid.toString()}\n ",
               style: TextStyle(color: Colors.white, fontSize: 16),
               textAlign: TextAlign.center,),
 
+            Image.asset(
+              'images/Red.png',
+              height: 325,
+            ),
 
+            SizedBox(height: 30),
 
             ElevatedButton(
               onPressed: () {
