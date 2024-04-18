@@ -45,10 +45,6 @@ class _DataListState extends State<DataList> {
             label: 'Data List',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.perm_device_information_outlined),
-            label: 'Data Details',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart),
             label: 'Data Visual',
           ),
@@ -145,11 +141,9 @@ class _DataListState extends State<DataList> {
   void _onItemTapped(int index) {
     if (index == 0) {
       Navigator.pushNamed(context, '/dataList');
-    } else if (index == 1) {
-      Navigator.pushNamed(context, '/dataDetails');
-    } else if (index == 2) {
+    }  else if (index == 1) {
       Navigator.pushNamed(context, '/dataVisual');
-    } else if (index == 3) {
+    } else if (index == 2) {
       Navigator.pushNamed(context, '/profiles');
     } else {
       setState(() {
