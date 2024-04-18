@@ -7,6 +7,9 @@ class Profiles extends StatefulWidget {
 }
 
 class _ProfilesState extends State<Profiles> {
+
+  int _selectedIndex = 2;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +56,41 @@ class _ProfilesState extends State<Profiles> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.black,
+        items: const <BottomNavigationBarItem>[
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'Data List',
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart),
+            label: 'Data Visual',
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Profiles',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey.shade800,
+        onTap: _onItemTapped,
+      ),
     );
   }
+  void _onItemTapped(int index) {
+    if (index == 0) {
+      Navigator.pushNamed(context, '/dataList');
+    }  else if (index == 1) {
+      Navigator.pushNamed(context, '/dataVisual');
+    } else if (index == 2) {
+    }
+  }
 }
+
+
