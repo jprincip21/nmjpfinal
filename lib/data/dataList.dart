@@ -22,8 +22,9 @@ class _DataListState extends State<DataList> {
         backgroundColor: Colors.red,
         elevation: 10,
         shadowColor: Colors.black,
+        leading: Text(""),
         title: Text(
-          "Pokémon",
+          "Pokédex",
           style: TextStyle(color: Colors.white),
         ),
       ),

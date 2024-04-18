@@ -14,12 +14,12 @@ class _SignUpState extends State<SignUp> {
   final _emailFieldController = TextEditingController();
   final _passFieldController = TextEditingController();
   final _passConfFieldController = TextEditingController();
-  final _userFieldController = TextEditingController();
-
-  bool isValidUser(String input){
-    final userRegex = RegExp(r'^[A-Za-z][A-Za-z0-9_]{2,29}$').hasMatch(input);
-    return input.isNotEmpty && userRegex;
-  }
+  // final _userFieldController = TextEditingController();
+  //
+  // bool isValidUser(String input){
+  //   final userRegex = RegExp(r'^[A-Za-z][A-Za-z0-9_]{2,29}$').hasMatch(input);
+  //   return input.isNotEmpty && userRegex;
+  // }
 
   bool isValidEmail(String input){
     final emailRegex = RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$').hasMatch(input);
@@ -60,20 +60,20 @@ class _SignUpState extends State<SignUp> {
                 padding: const EdgeInsets.all(8.0),
                 children: [
 
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                        icon: Icon(Icons.people, color: Colors.white),
-                        hintText: "Enter Username",
-                        hintStyle: TextStyle(color: Colors.grey),
-                        labelText: "Username",
-                        labelStyle: TextStyle(color: Colors.white)
-                    ),
-                    keyboardType: TextInputType.name,
-                    controller: _userFieldController,
-                    validator: (val) =>
-                    isValidUser(val!) ? null : "Invalid Username",
-                  ),
+                  // TextFormField(
+                  //   style: const TextStyle(color: Colors.white),
+                  //   decoration: const InputDecoration(
+                  //       icon: Icon(Icons.people, color: Colors.white),
+                  //       hintText: "Enter Username",
+                  //       hintStyle: TextStyle(color: Colors.grey),
+                  //       labelText: "Username",
+                  //       labelStyle: TextStyle(color: Colors.white)
+                  //   ),
+                  //   keyboardType: TextInputType.name,
+                  //   controller: _userFieldController,
+                  //   validator: (val) =>
+                  //   isValidUser(val!) ? null : "Invalid Username",
+                  // ),
 
                   //Email Input
                   TextFormField(
@@ -114,9 +114,9 @@ class _SignUpState extends State<SignUp> {
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                         icon: Icon(Icons.password, color: Colors.white),
-                        hintText: "Enter Password",
+                        hintText: "Confirm Password",
                         hintStyle: TextStyle(color: Colors.grey),
-                        labelText: "Password",
+                        labelText: "Confirm Password",
                         labelStyle: TextStyle(color: Colors.white)
                     ),
                     keyboardType: TextInputType.visiblePassword,
