@@ -66,17 +66,17 @@ class _DataListState extends State<DataList> {
 
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: 'Data List',
+            label: 'Pokemon',
           ),
 
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart),
-            label: 'Data Visual',
+            label: 'Charts',
           ),
 
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
-            label: 'Profiles',
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,

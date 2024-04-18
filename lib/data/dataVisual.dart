@@ -11,6 +11,7 @@ class DataVisual extends StatefulWidget {
 class _DataVisualState extends State<DataVisual> {
   int _selectedIndex = 0;
 
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -25,7 +26,7 @@ class _DataVisualState extends State<DataVisual> {
           elevation: 10,
           shadowColor: Colors.black,
           title: Text(
-            "Data Visual Screen",
+            "Charts",
             style: TextStyle(color: Colors.white),
           ),
 
@@ -35,11 +36,11 @@ class _DataVisualState extends State<DataVisual> {
             tabs: <Widget>[
               Tab(
                 icon: Icon(Icons.bar_chart),
-                text: 'Bar Chart',
+                text: 'Name vs. Weight',
               ),
               Tab(
                 icon: Icon(Icons.show_chart),
-                text: 'Line Chart',
+                text: 'ID vs. Height',
               ),
             ],
           ),
@@ -51,10 +52,65 @@ class _DataVisualState extends State<DataVisual> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 var pokemons = snapshot.data as List<Pokemon>;
+
+                var seriesList1 = [
+                  charts.Series<Pokemon, String>(
+                    id: 'Name vs Weight',
+                    domainFn: (Pokemon pokemon, _) => pokemon.name,
+                    measureFn: (Pokemon pokemon,_) => pokemon.weight,
+                    colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                    labelAccessorFn: (Pokemon pokemon, _) => pokemon.weight.toString(),
+                    data: pokemons,
+                  )
+                ];
+
+                var seriesList2 = [
+                  charts.Series<Pokemon, int>(
+                    id: 'ID vs. Weight',
+                    data: pokemons,
+                    domainFn: (Pokemon pokemon, _) => pokemon.id,
+                    measureFn: (Pokemon pokemon, _) => pokemon.height,
+                    colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+                  )
+                ];
                 return TabBarView(
                     children: <Widget>[
-                      Container(child: Center(child: Text('Bar Chart Tab', style: TextStyle(color: Colors.white),))),
-                       Container(child: Center(child: Text('Line Chart Tab', style: TextStyle(color: Colors.white),))),
+                      Container(child: Center(child: charts.BarChart(
+                        seriesList1,
+                        animate: true,
+                        domainAxis: const charts.OrdinalAxisSpec(
+                            renderSpec: charts.SmallTickRendererSpec(
+                                labelRotation: 60,
+                                labelStyle: charts.TextStyleSpec(
+                                    fontSize: 14, // size in Pts.
+                                    color: charts.MaterialPalette.white),
+
+                                lineStyle:charts.LineStyleSpec(
+                                    color: charts.MaterialPalette.white)
+
+                            )),
+                        primaryMeasureAxis: const charts.NumericAxisSpec(
+                            renderSpec:charts.GridlineRendererSpec(
+
+
+                                labelStyle:charts.TextStyleSpec(
+                                    fontSize: 14, // size in Pts.
+                                    color: charts.MaterialPalette.white),
+
+                                lineStyle:charts.LineStyleSpec(
+                                    color: charts.MaterialPalette.white))),
+
+                        barRendererDecorator: charts.BarLabelDecorator<String>(
+                          insideLabelStyleSpec: const charts.TextStyleSpec(color: charts.Color.white, fontSize: 5),
+                          outsideLabelStyleSpec: const charts.TextStyleSpec(color: charts.Color.white, fontSize: 5),
+                        ),
+
+                      ),)),
+                       Container(child: Center(child: charts.LineChart(
+                         seriesList2,
+                         animate: true,
+                         defaultRenderer: charts.LineRendererConfig(includePoints: true),
+                       ))),
 
                      ],
                     );
