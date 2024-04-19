@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:nmjpfinal/data/dataList.dart';
 
 class DataDetails extends StatefulWidget {
 
@@ -41,31 +40,37 @@ class _DataDetailsState extends State<DataDetails> {
             if (snapshot.hasData) {
               var details = snapshot.data!;
               return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Pokédex ID #: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                      Text(details.id.toString(), style: TextStyle(color: Colors.white),),
+                      Text("Pokédex ID #: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),),
+                      Text(details.id.toString(), style: TextStyle(color: Colors.white, fontSize: 16),),
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Type(s): ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                      Text(details.types[0], style: TextStyle(color: Colors.white),)
-                      
+                      Text("Type(s): ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),),
+                      Text(details.types[0], style: TextStyle(color: Colors.white, fontSize: 16),)
+
 
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Height: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                      Text("${details.height.toString()}m", style: TextStyle(color: Colors.white),),
+                      Text("Height: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),),
+                      Text("${details.height.toString()}m", style: TextStyle(color: Colors.white, fontSize: 16),),
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Weight: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                      Text("${details.weight.toString()}Kgs", style: TextStyle(color: Colors.white),),
+                      Text("Weight: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),),
+                      Text("${details.weight.toString()}Kgs", style: TextStyle(color: Colors.white, fontSize: 16),),
                     ],
                   ),
                 ],
@@ -84,17 +89,17 @@ class _DataDetailsState extends State<DataDetails> {
         const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: 'Data List',
+            label: 'Pokemon',
           ),
 
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart),
-            label: 'Data Visual',
+            label: 'Charts',
           ),
 
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
-            label: 'Profiles',
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -117,8 +122,8 @@ class _DataDetailsState extends State<DataDetails> {
 Future<PokemonDetails> getPokemonDetails(int id) async {
   var url = 'https://softwium.com/api/pokemons/$id';
   var response = await http.get(Uri.parse(url));
-  print('Response status: ${response.statusCode}');
-  print('Response body: ${response.body}');
+  //print('Response status: ${response.statusCode}');
+  //print('Response body: ${response.body}');
   if (response.statusCode == 200) {
     Map<String, dynamic> jsonResponse = jsonDecode(response.body);
     return PokemonDetails.fromJson(jsonResponse);

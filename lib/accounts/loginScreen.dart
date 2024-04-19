@@ -98,6 +98,7 @@ class _LoginState extends State<Login> {
                           FirebaseAuth.instance.signInWithEmailAndPassword(
                               email: _emailFieldController.text,
                               password: _passFieldController.text).then((value) async {
+
                             await cloudUser(true);
                             Navigator.pushNamed(context, '/dataList');
                           }).onError((error, stackTrace) {
@@ -133,7 +134,7 @@ class _LoginState extends State<Login> {
     final CollectionReference onlineUser = FirebaseFirestore.instance.collection('onlineStatus');
     String? email = FirebaseAuth.instance.currentUser?.email;
     String? uid = FirebaseAuth.instance.currentUser?.uid.toString();
-    onlineUser.doc(uid).set({'email': email,'uid': uid, 'online' : status});
+    onlineUser.doc(uid).set({'email': email,'uid': uid, 'online' : status}, SetOptions(merge: true));
     return;
   }
 }

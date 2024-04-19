@@ -97,152 +97,38 @@ class _ProfilesState extends State<Profiles> {
             SizedBox(height: 30),
 
             ElevatedButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        AlertDialog(
-                          backgroundColor: Colors.grey.shade800,
-                          title: Text("Confirm Credientials Before Changing Email", style: TextStyle(color: Colors.white),),
-                          content: Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                TextFormField(
-                                  style: const TextStyle(color: Colors.white),
-                                  decoration: const InputDecoration(
-                                      icon: Icon(Icons.email, color: Colors.white,),
-                                      hintText: "New Email",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      labelText: "New Email",
-                                      labelStyle: TextStyle(color: Colors.white)
-                                  ),
-                                  keyboardType: TextInputType.emailAddress,
-                                  controller: _emailChangeFieldController,
-                                  validator: (val) =>
-                                  isValidEmail(val!) ? null : "Invalid Email",
-                                ),
-
-                                TextFormField(
-                                  style: const TextStyle(color: Colors.white),
-                                  decoration: const InputDecoration(
-                                      icon: Icon(Icons.email, color: Colors.white,),
-                                      hintText: "Current Email",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      labelText: "Current Email",
-                                      labelStyle: TextStyle(color: Colors.white)
-                                  ),
-                                  keyboardType: TextInputType.emailAddress,
-                                  controller: _emailFieldController,
-                                  validator: (val) =>
-                                  isValidEmail(val!) ? null : "Invalid Email",
-                                ),
-
-                                TextFormField(
-                                  obscureText: true,
-                                  style: const TextStyle(color: Colors.white),
-                                  decoration: const InputDecoration(
-                                      icon: Icon(Icons.password, color: Colors.white,),
-                                      hintText: "Enter Password",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      labelText: "Password",
-                                      labelStyle: TextStyle(color: Colors.white)
-                                  ),
-                                  keyboardType: TextInputType.visiblePassword,
-                                  controller: _passFieldController,
-                                  validator: (val) =>
-                                  isValidPass(val!) ? null : "Invalid Password",
-                                ),
-
-                              ],
-                            ),
-                          ),
-                          actions: [
-                            ElevatedButton(onPressed: () {Navigator.pop(context);}, child: Text("Cancel")),
-                            ElevatedButton(onPressed: (){
-                              if(_formKey.currentState!.validate()) {
-                                FirebaseAuth.instance.currentUser?.reauthenticateWithCredential(EmailAuthProvider
-                                    .credential(email: _emailFieldController.text, password: _passFieldController.text)).then((value) {
-                                  FirebaseAuth.instance.currentUser?.verifyBeforeUpdateEmail(
-                                      _emailChangeFieldController.text);
-                                  Navigator.pop(context);
-                                }).onError((error, stackTrace) {
-                                  print("Error ${error.toString()}");
-                                });
-                              }
-                            }, child: Text("Confirm")),
-
-                          ],
-                        ));
-
-
-              },
-              child: Text("Change Email"),
-            ),
-
-            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, ),
               onPressed: () {
                 FirebaseAuth.instance.sendPasswordResetEmail(email: FirebaseAuth.instance.currentUser!.email.toString());
               },
-              child: Text("Update Password"),
+              child: Text("Reset Password", style: TextStyle(color: Colors.white)),
             ),
 
             ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, ),
               onPressed: () async {
                 await cloudUser(false).then((value) async {
                   FirebaseAuth.instance.signOut().then((value) {
                     Navigator.pop(context);
                     Navigator.pop(context);
+                    Navigator.pushNamed(context, '/login');
                   }).onError((error, stackTrace) {
                     print("Error ${error.toString()}");
                   });
                 });
 
               },
-              child: Text("Logout"),
+              child: Text("Logout", style: TextStyle(color: Colors.white)),
             ),
           ],
         ),
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   type: BottomNavigationBarType.fixed,
-      //   backgroundColor: Colors.black,
-      //   items: const <BottomNavigationBarItem>[
-      //
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.list),
-      //       label: 'Data List',
-      //     ),
-      //
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.bar_chart),
-      //       label: 'Data Visual',
-      //     ),
-      //
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.account_circle),
-      //       label: 'Profiles',
-      //     ),
-      //   ],
-      //   currentIndex: _selectedIndex,
-      //   selectedItemColor: Colors.white,
-      //   unselectedItemColor: Colors.grey.shade800,
-      //   onTap: _onItemTapped,
-      // ),
+
     );
   }
-  // void _onItemTapped(int index) {
-  //   if (index == 0) {
-  //     Navigator.pushNamed(context, '/dataList');
-  //   }  else if (index == 1) {
-  //     Navigator.pushNamed(context, '/dataVisual');
-  //   } else if (index == 2) {
-  //   }
-  // }
 
   Future<void> cloudUser(bool status) async {
     final CollectionReference onlineUser = FirebaseFirestore.instance.collection('onlineStatus');
-    String? email = FirebaseAuth.instance.currentUser?.email;
     String? uid = FirebaseAuth.instance.currentUser?.uid.toString();
     onlineUser.doc(uid).set({'online' : status}, SetOptions(merge: true));
     return;
