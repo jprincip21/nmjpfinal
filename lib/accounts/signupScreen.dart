@@ -43,7 +43,7 @@ class _SignUpState extends State<SignUp> {
             backgroundColor: Colors.red,
             elevation: 10,
             shadowColor: Colors.black,
-            title: Text("Sign Up Screen", style: TextStyle(color: Colors.white),)
+            title: Text("Create Account", style: TextStyle(color: Colors.white),)
         ),
         body:
         Padding(

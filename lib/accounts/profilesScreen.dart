@@ -55,32 +55,9 @@ class _ProfilesState extends State<Profiles> {
           children: [
             SizedBox(height: 50),
 
-            // TextFormField(
-            //   style: const TextStyle(color: Colors.white),
-            //   decoration: const InputDecoration(
-            //       icon: Icon(Icons.people, color: Colors.white),
-            //       hintText: "Enter New Username",
-            //       hintStyle: TextStyle(color: Colors.grey),
-            //       labelText: "Username",
-            //       labelStyle: TextStyle(color: Colors.white)
-            //   ),
-            //   keyboardType: TextInputType.name,
-            //   controller: _userFieldController,
-            //   validator: (val) =>
-            //   isValidUser(val!) ? null : "Invalid Username",
-            // ),
-            //
-            // ElevatedButton(
-            //   onPressed: () {
-            //     FirebaseAuth.instance.currentUser?.updateDisplayName(_userFieldController.text);
-            //
-            //   },
-            //   child: Text("Change Username"),
-            // ),
             Text("Account Details:",
               style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,),
-
 
 
             Text(

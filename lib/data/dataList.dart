@@ -143,21 +143,22 @@ Future<bool> favouriteData(int id) async {
   var snapshot = await onlineUser.get();
   if(snapshot.exists){
     Map<String, dynamic> data = snapshot.data()!;
-    onlineUser.set({"favourites": {'$id' : false}}, SetOptions(merge: true));
+    onlineUser.set({"favourites": {'$id' : true}}, SetOptions(merge: true));
     var favourites = data['favourites']['$id'];
     //print(data);
 
 
     if(favourites == false || favourites == null){
       favourite = true;
+      onlineUser.set({"favourites": {'$id' : favourite}}, SetOptions(merge: true));
     }
     else{
       favourite = false;
+      onlineUser.set({"favourites": {'$id' : favourite}}, SetOptions(merge: true));
     }
     //print(favourite);
   }
 
-  onlineUser.set({"favourites": {'$id' : favourite}}, SetOptions(merge: true));
 
   return favourite;
 }

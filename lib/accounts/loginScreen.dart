@@ -33,7 +33,7 @@ class _LoginState extends State<Login> {
           shadowColor: Colors.black,
           leading: Text(""),
           title: Text(
-            "Login Screen",
+            "Login",
             style: TextStyle(color: Colors.white),
           ),
 
